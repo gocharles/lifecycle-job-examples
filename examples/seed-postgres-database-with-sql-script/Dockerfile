@@ -18,5 +18,5 @@ COPY seed.sh .
 
 RUN chmod +x seed.sh
 
-ENTRYPOINT [ "/bin/bash" ]
+ENTRYPOINT [ "/bin/bash", "seed.sh" ]
 
