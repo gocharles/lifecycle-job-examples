@@ -33,17 +33,17 @@ echo "Configuring AWS credentials..."
 aws configure set aws_access_key_id $AWS_ACCESS_KEY && aws configure set aws_secret_access_key $AWS_SECRET_KEY && aws configure set region $AWS_REGION
 
 # Get the latest file from S3
-echo "Fetching latest file from S3: s3://${S3_BUCKET_NAME}/${SEED_FOLDER}"
-latest_file=$(aws s3 ls "s3://${S3_BUCKET_NAME}/${SEED_FOLDER}" | sort -k1,2 | tail -n 1 | awk '{print $4}')
+echo "Fetching latest file from S3: s3://${BUCKET_NAME}/${SEED_FOLDER}"
+latest_file=$(aws s3 ls "s3://${BUCKET_NAME}/${SEED_FOLDER}" | sort -k1,2 | tail -n 1 | awk '{print $4}')
 
 if [[ -z "${latest_file}" ]]; then
-  echo "No files found in S3 path: s3://${S3_BUCKET_NAME}/${SEED_FOLDER}"
+  echo "No files found in S3 path: s3://${BUCKET_NAME}/${SEED_FOLDER}"
   exit 1
 fi
 
 # Download the latest file from S3
 echo "Downloading file: ${latest_file}"
-aws s3 cp "s3://${S3_BUCKET_NAME}/${SEED_FOLDER}/${latest_file}" seed.sql
+aws s3 cp "s3://${BUCKET_NAME}/${SEED_FOLDER}/${latest_file}" seed.sql
 
 # Check if seed.sql exists in the current directory
 if [[ ! -f "seed.sql" ]]; then
