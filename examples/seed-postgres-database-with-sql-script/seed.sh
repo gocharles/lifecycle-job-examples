@@ -34,7 +34,8 @@ aws configure set aws_access_key_id $AWS_ACCESS_KEY && aws configure set aws_sec
 
 # Get the latest file from S3
 echo "Fetching latest file from S3: s3://${BUCKET_NAME}/${SEED_FOLDER}"
-latest_file=$(aws s3 ls "s3://${BUCKET_NAME}/${SEED_FOLDER}" | sort -k1,2 | tail -n 1 | awk '{print $4}')
+aws s3 ls "s3://${BUCKET_NAME}/${SEED_FOLDER}"
+latest_file=$(aws s3 ls s3://$BUCKET_NAME/$FOLDER_NAME/ | sort -k1,2 | tail -n 1 | awk '{print $4}')
 
 if [[ -z "${latest_file}" ]]; then
   echo "No files found in S3 path: s3://${BUCKET_NAME}/${SEED_FOLDER}"
