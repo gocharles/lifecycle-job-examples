@@ -10,6 +10,12 @@ set -u
 # set -o pipefail to cause the script to fail if any of the commands piped together fail.
 set -o pipefail
 
+# Skip everything if environment is staging
+if [[ "${QOVERY_ENVIRONMENT_NAME:-}" == "staging" ]]; then
+    echo "Skipping database seeding for staging environment"
+    exit 0
+fi
+
 # Check if psql is installed
 if ! command -v psql &> /dev/null; then
   echo "psql could not be found. Please install it and try again."
